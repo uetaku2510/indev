@@ -53,6 +53,9 @@ body {
   th.saturday {
     background-color: #8277ff;
   }
+  th.day{
+    background-color: #ff7777;
+  }
   
   .day {
     border-collapse: collapse;
