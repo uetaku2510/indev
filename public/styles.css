@@ -46,6 +46,14 @@ body {
     vertical-align: top;
     height: 100px;
   }
+
+  th.sunday {
+    background-color: #ff7777;
+  }
+  th.saturday {
+    background-color: #8277ff;
+  }
+  
   
   .day {
     border-collapse: collapse;
