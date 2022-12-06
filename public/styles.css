@@ -1,7 +1,9 @@
 body {
     background: #FFFFCC;
   }
-  
+  h1{
+    text-align: center;
+  }
   
   midasi {
     position: relative;
