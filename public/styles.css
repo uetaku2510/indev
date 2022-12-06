@@ -1,3 +1,63 @@
 body {
-    background: skyblue;
-}
+    background: green;
+  }
+  
+  midasi {
+    position: relative;
+    top: 40px;
+    left: 30px;
+  }
+  
+  honbun {
+    position: relative;
+    top: 30px;
+    left: 80px;
+  }
+  /*
+  table  {
+    border: 1px solid #000;
+  }
+   
+  table th {
+    border: 1px solid #000;
+  }
+  table td {
+    border: 1px solid #000;
+  }*/
+  
+  .calendar {
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .calendar th {
+    border: 1px solid #000000;
+    background-color: #778cff;
+    width: 300px;
+    height: 50px;
+  }
+  .calendar td {
+    border: 1px solid #000000;
+    padding: 5px 10px;
+    text-align: left;
+    vertical-align: top;
+    height: 100px;
+  }
+  
+  .day {
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .day th {
+    background-color: #d4ff5f;
+    width: 300px;
+    height: 20px;
+  }
+  .day td {
+    padding: 5px 10px;
+    text-align: left;
+    height: 100px;
+  }
+  
+  .daynum {
+    font-size: 20px
+  }

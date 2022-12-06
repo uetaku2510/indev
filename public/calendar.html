@@ -12,13 +12,84 @@
   <input id="sche_start_ip" type="datetime-local" />
   <input id="sche_end_ip" type="datetime-local" />
   <button id="submit">送信</button>
-  <button id="show">表示</button>
-  <nobr id = "comment_op"></nobr>
-  <nobr id = "time_op"></nobr>
+  <button id="update">更新</button>
+  <button id="back"><前の月</button>
+  <button id="next">次の月></button>
+  <div id = "comment_op"></div>
+  <div id = "result_op"></div>
+
+  <table class="calendar">
+    <tr>
+      <th>日</th> <th>月</th> <th>火</th> <th>水</th> <th>木</th> <th>金</th> <th>土</th>
+    </tr>
+    <tr>
+      <td>
+
+
+        <table class="day">
+          <tr>
+            <th><div id = "d1" class = "daynum"></div></th>
+          </tr>
+          <tr>
+            <th><div id = "n1_1"></div><div id = "c1_1"></div></th>
+          </tr>
+          <tr>
+            <th><div id = "n1_2"></div><div id = "c1_2"></div></th>
+          </tr>
+        </table>
+
+
+      </td>
+      <td>
+        
+
+        <table class="day">
+          <tr>
+            <th><div id = "d2" class = "daynum"></div></th>
+          </tr>
+          <tr>
+            <th><div id = "n2_1"></div><div id = "c2_1"></div></th>
+          </tr>
+          <tr>
+            <th><div id = "n2_2"></div><div id = "c2_2"></div></th>
+          </tr>
+        </table>
+
+
+      </td>
+    </tr>
+    <tr>
+      
+      <td>レモン</td> <td>酸っぱい</td>
+
+    </tr>
+    <tr>
+
+      <td>レモン</td> <td>酸っぱい</td>
+
+    </tr>
+    <tr>
+
+      <td>レモン</td> <td>酸っぱい</td>
+
+    </tr>
+    <tr>
+      
+      <td>レモン</td> <td>酸っぱい</td>
+
+    </tr>
+  </table>
 
   <script type="module">
-    async function reload(group, time){
-      const response = await fetch("/code_info2", {
+    let group;
+    let username;
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let time = `${year}-${month}`;
+
+    async function reload(){
+      const response = await fetch("/download", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ group, time })
@@ -30,14 +101,16 @@
         for (let i = 0; i < data.length-1; i++) {
           let data2 = data[i].split('||');
           let created_at = data2[0];
-          let sche_start = data2[1];
-          let sche_end = data2[2];
-          let comment = data2[3];
+          let user = data2[1];
+          let sche_start = data2[2];
+          let sche_end = data2[3];
+          let comment = data2[4];
 
           comment_op.textContent = comment;
 
           console.log('------------------------------------');
           console.log(created_at);
+          console.log(user);
           console.log(sche_start);
           console.log(sche_end);
           console.log(comment);
@@ -46,33 +119,62 @@
     }
 
     window.onload = async (event) => {
+      const response = await fetch("/login_remove", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ })
+      });
+
       console.log('こんですー今から処理しますー');
       //const response = await fetch("/reset_obj"); // GET
-      let group = 1;
-      let year = 2022;
-      let month = 11;
-      let time = `${year}-${month}`
-      reload(group, time);
+      let result = await response.text();
+      let data = result.split('@@');
+      username = data[0];
+      group = data[1];
+      reload();
+
+      d1.textContent = "1";
+      d2.textContent = "2";
+
+      n1_1.textContent = "名無しA:";
+      n2_1.textContent = "名無しB:";
+      n2_2.textContent = "名無しC:";
+
+      c1_1.textContent = "テストな予定a";
+      c2_1.textContent = "テストな予定b";
+      c2_2.textContent = "テストな予定c";
+    }
+
+    document.querySelector("#update").onclick = async (event) => {
+      reload();
+    }
+
+    document.querySelector("#back").onclick = async (event) => {
+      month--;
+      time = `${year}-${month}`;
+      reload();
+    }
+
+    document.querySelector("#next").onclick = async (event) => {
+      month++;
+      time = `${year}-${month}`;
+      reload();
     }
 
     document.querySelector("#submit").onclick = async (event) => {
-      const group = 1;
       const sche_start = document.querySelector("#sche_start_ip").value;
       const sche_end = document.querySelector("#sche_end_ip").value;
       const comment = document.querySelector("#comment_ip").value;
-      
-      if (comment.includes('||') || comment.includes('@@')){
-        alert("no");
-      }else{
-        const response = await fetch("/code_info", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ group, sche_start, sche_end, comment })
-        });
-        let result = await response.text();
-        alert(result);
-      }
+
+      const response = await fetch("/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ group, username, sche_start, sche_end, comment })
+      });
+      let result = await response.text();
+      result_op.textContent = result;
     }
+    
   </script>
 
 </body>
