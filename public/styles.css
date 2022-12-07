@@ -5,6 +5,9 @@ body {
     text-align: center;
     font-size: 40px;
   }
+  h2{
+    text-align: left;
+  }
   
   midasi {
     position: relative;
