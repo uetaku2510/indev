@@ -1,8 +1,10 @@
 body {
   background:#FFFFCC;
 }
-h1 {
+h1{
   color:#FFA07A;
+}
+h1 {
   position: relative;
   padding: 5px 26px 5px 42px;
   background: #fff0d9;
