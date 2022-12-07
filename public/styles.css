@@ -9,6 +9,9 @@ body {
     text-align: left;
     font-size: 15px;
   }
+  button{
+    color:aqua;
+  }
   
   midasi {
     position: relative;
